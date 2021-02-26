@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MarsRover.Application.Interfaces;
+using MarsRover.Application.Services;
+using MarsRover.Interfaces;
+using MarsRover.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +28,8 @@ namespace MarsRover
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddScoped<IRoverService, RoverService>();
+            services.AddScoped<ICommandCenterService, CommandCenterService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

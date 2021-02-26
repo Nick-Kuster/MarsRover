@@ -4,6 +4,16 @@
     "C:\\Users\\nkuster\\source\\repos\\MarsRover\\MarsRover\\MarsRover.csproj": {}
   },
   "projects": {
+    "C:\\Users\\nkuster\\source\\repos\\MarsRover\\MarsRover.Application\\MarsRover.Application.csproj": {
+      "restore": {
+        "projectUniqueName": "C:\\Users\\nkuster\\source\\repos\\MarsRover\\MarsRover.Application\\MarsRover.Application.csproj",
+        "projectName": "MarsRover.Application",
+        "projectPath": "C:\\Users\\nkuster\\source\\repos\\MarsRover\\MarsRover.Application\\MarsRover.Application.csproj"
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
     "C:\\Users\\nkuster\\source\\repos\\MarsRover\\MarsRover\\MarsRover.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -30,7 +40,11 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\nkuster\\source\\repos\\MarsRover\\MarsRover.Application\\MarsRover.Application.csproj": {
+                "projectPath": "C:\\Users\\nkuster\\source\\repos\\MarsRover\\MarsRover.Application\\MarsRover.Application.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -41,6 +55,28 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[2.10.0, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "Serilog.Sinks.Debug": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

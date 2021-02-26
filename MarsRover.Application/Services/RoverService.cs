@@ -2,50 +2,133 @@
 using MarsRover.Application.Interfaces;
 using MarsRover.Application.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MarsRover.Application.Services
 {
     public class RoverService : IRoverService
     {
-        public void MoveRover(Rover rover, Grid grid, int numberOfMoves)
+        public Rover ExecuteRoverCommands(Rover inputRover, int gridWidth, int gridHeight)
         {
-            switch (rover.FacingDirection)
+            foreach(var input in inputRover.Command)
             {
-                case CardinalDirections.North:
-                    rover.CurrentLocation.YCoordinate += numberOfMoves;
-                    break;
-                case CardinalDirections.East:
-                    rover.CurrentLocation.XCoordinate += numberOfMoves;
-                    break;
-                case CardinalDirections.South:
-                    rover.CurrentLocation.YCoordinate -= numberOfMoves;
-                    break;
-                case CardinalDirections.West:
-                    rover.CurrentLocation.XCoordinate -= numberOfMoves;
-                    break;
-                default:
-                    throw new Exception("Rover facing direction is set to an invalid cardinal direction.");
+                if(input == "m")
+                {
+                    MoveRover(inputRover, gridWidth, gridHeight);
+                }
+                if(input == "l" || input == "r")
+                {
+                    TurningDirection direction = ConvertStringToTurningDirection(input);
+                    TurnRover(inputRover, direction);
+                }
+            }
+            return inputRover;
+        }
+
+        private void MoveRover(Rover rover, int gridWidth, int gridHeight)
+        {
+            if (ValidateMovement(rover, gridWidth, gridHeight))
+            {
+                switch (rover.FacingDirection)
+                {
+                    case CardinalDirection.North:
+                        rover.YCoordinate++;
+                        break;
+                    case CardinalDirection.East:
+                        rover.XCoordinate++;
+                        break;
+                    case CardinalDirection.South:
+                        rover.YCoordinate--;
+                        break;
+                    case CardinalDirection.West:
+                        rover.XCoordinate--;
+                        break;
+                    default:
+                        throw new Exception("Rover facing direction is set to an invalid cardinal direction.");
+                }
+            }
+            else
+            {
+                throw new Exception($"Could not move rover to coordinate specified");
             }
         }
 
-        public void TurnRover(Rover rover, TurningDirections turnDirection, int numberOfTurns)
+        private void TurnRover(Rover rover, TurningDirection turnDirection)
         {
-            if(turnDirection == TurningDirections.Left)
+            if (turnDirection == TurningDirection.Left)
             {
-                rover.FacingDirection = 0 ? 3 : rover.FacingDirection - numberOfTurns
+                if(rover.FacingDirection == CardinalDirection.North)
+                {
+                    rover.FacingDirection = CardinalDirection.West;
+                }
+                else
+                {
+                    rover.FacingDirection -= 1;
+                }
             }
-            else if(turnDirection == TurningDirections.Right)
+            else if (turnDirection == TurningDirection.Right)
             {
-                rover.FacingDirection += numberOfTurns;
+                if (rover.FacingDirection == CardinalDirection.West)
+                {
+                    rover.FacingDirection = CardinalDirection.North;
+                }
+                else
+                {
+                    rover.FacingDirection += 1;
+                }
             }
             else
             {
                 throw new Exception("Invalid turn direction passed.");
             }
         }
+
+        private TurningDirection ConvertStringToTurningDirection(string input)
+        {
+            switch (input)
+            {
+                case "l":
+                    return TurningDirection.Left;
+                case "r":
+                    return TurningDirection.Right;
+                default:
+                    throw new Exception("Invalid turning direction found.");
+            }
+        }
+
+        private bool ValidateMovement(Rover rover, int gridWidth, int gridHeight)
+        {
+            bool valid = true;
+            switch (rover.FacingDirection)
+            {
+                case CardinalDirection.North:
+                    if (rover.YCoordinate + 1 > gridHeight)
+                    {
+                        valid = false;
+                    };
+                    break;
+                case CardinalDirection.East:
+                    if (rover.XCoordinate + 1 > gridWidth)
+                    {
+                        valid = false;
+                    };
+                    break;
+                case CardinalDirection.South:
+                    if (rover.YCoordinate - 1 < 0)
+                    {
+                        valid = false;
+                    };
+                    break;
+                case CardinalDirection.West:
+                    if (rover.YCoordinate - 1 < 0)
+                    {
+                        valid = false;
+                    };
+                    break;
+                default:
+                    break;
+            }
+
+            return valid;
+        }    
     }
 }

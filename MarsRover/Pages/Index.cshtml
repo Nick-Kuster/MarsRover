@@ -1,10 +1,60 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Command Center";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<style>
+    input[type=text] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .results {
+        width: 100%;
+        font-size: 2em;
+    }
+
+    .resultsDiv{
+        border: 4px solid green;
+    }
+</style>
+
+<h1>CommandCenter</h1>
+@if (!string.IsNullOrEmpty(Model.ViewModel.RoverOneEndingLocation) && !string.IsNullOrEmpty(Model.ViewModel.RoverTwoEndingLocation))
+{
+    <h2>Results:</h2>
+    <div class="resultsDiv">
+        <span class="results">Rover One Ending Location: @Model.ViewModel.RoverOneEndingLocation</span><br/>
+        <span class="results">Rover Two Ending Location: @Model.ViewModel.RoverTwoEndingLocation</span>
+    </div>
+}
+else
+{
+    <h2>Enter the information below and click "Submit" to move the rovers and see where they end up. Please, no commas in your input.</h2>
+}
+
+
+<form method="post">
+    <label for="GridInput">Grid Input (X Y coordinates of upper-right corner)</label>
+    @Html.ValidationMessageFor(Model => Model.ViewModel.GridInput, "", new { @class = "text-danger" })
+    <input id="GridInput" asp-for="ViewModel.GridInput" type="text" />
+    <label for="RoverOneStartingLocation">Rover 1 Starting Location (starting X Y coordinates followed by starting direction)</label>
+    @Html.ValidationMessageFor(Model => Model.ViewModel.RoverOneStartingLocation, "", new { @class = "text-danger" })
+    <input id="RoverOneStartingLocation" asp-for="ViewModel.RoverOneStartingLocation" type="text" />
+    <label for="RoverOneCommandString">Rover 1 Command String (valid inputs are 'm' for move, 'r' for turn right, and 'l' for turn left)</label>
+    @Html.ValidationMessageFor(Model => Model.ViewModel.RoverOneCommandString, "", new { @class = "text-danger" })
+    <input id="RoverOneCommandString" asp-for="ViewModel.RoverOneCommandString" type="text" />
+    <label for="RoverTwoStartingLocation">Rover 2 Starting Location (starting X,Y coordinates followed by starting direction)</label>
+    @Html.ValidationMessageFor(Model => Model.ViewModel.RoverTwoStartingLocation, "", new { @class = "text-danger" })
+    <input id="RoverTwoStartingLocation" asp-for="ViewModel.RoverTwoStartingLocation" type="text" />
+    <label for="RoverTwoCommandString">Rover 2 Command String (valid inputs are 'm' for move, 'r' for turn right, and 'l' for turn left)</label>
+    @Html.ValidationMessageFor(Model => Model.ViewModel.RoverTwoCommandString, "", new { @class = "text-danger" })
+    <input id="RoverTwoCommandString" asp-for="ViewModel.RoverTwoCommandString" type="text" />
+    <input type="submit" class="btn-primary" />
+</form>

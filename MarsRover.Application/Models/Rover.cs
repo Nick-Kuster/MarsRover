@@ -1,12 +1,12 @@
 ﻿using MarsRover.Application.Enums;
-using System;
 
 namespace MarsRover.Application.Models
 {
     public class Rover
     {
-        public Guid ID { get; set; }
-        public CardinalDirections FacingDirection { get; set; }
-        public Location CurrentLocation { get; set; }
+        public CardinalDirection FacingDirection { get; set; }
+        public int XCoordinate { get; set; }
+        public int YCoordinate { get; set; }
+        public string[] Command { get; set; }
     }
 }

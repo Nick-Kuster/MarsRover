@@ -1,6 +1,6 @@
 ﻿namespace MarsRover.Application.Enums
 {
-    public enum TurningDirections
+    public enum TurningDirection
     {
         Left,
         Right

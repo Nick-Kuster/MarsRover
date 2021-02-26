@@ -1,6 +1,6 @@
 ﻿namespace MarsRover.Application.Enums
 {
-    public enum CardinalDirections
+    public enum CardinalDirection
     {
         North = 0,
         East = 1,
