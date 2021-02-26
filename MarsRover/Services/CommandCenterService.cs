@@ -21,9 +21,9 @@ namespace MarsRover.Services
         public CommandCenterViewModel ExecuteCommands(CommandCenterViewModel model)
         {
             string[] roverOneStartingLocationArray = model.RoverOneStartingLocation?.ToStringArray();
-            string[] roverOneCommandArray = model.RoverOneCommandString?.ToStringArray();
+            string[] roverOneCommandArray = model.RoverOneCommandString?.Select(x => x.ToString().ToLower()).ToArray();
             string[] roverTwoStartingLocationArray = model.RoverTwoStartingLocation?.ToStringArray();
-            string[] roverTwoCommandArray = model.RoverTwoCommandString?.ToStringArray();
+            string[] roverTwoCommandArray = model.RoverTwoCommandString?.Select(x => x.ToString().ToLower()).ToArray();
             string[] gridCoordinateArray = model.GridInput?.ToStringArray();
 
             Rover roverOne = new Rover()
@@ -31,7 +31,7 @@ namespace MarsRover.Services
                 XCoordinate = Convert.ToInt32(roverOneStartingLocationArray[0]),
                 YCoordinate = Convert.ToInt32(roverOneStartingLocationArray[1]),
                 FacingDirection = ConvertStringToCardinalDirection(roverOneStartingLocationArray[2]),
-                Command = roverOneCommandArray.Select(x => x.ToString()).ToArray()
+                Command = roverOneCommandArray
             };
 
             Rover roverTwo = new Rover()

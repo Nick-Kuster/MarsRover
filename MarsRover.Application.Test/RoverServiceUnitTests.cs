@@ -6,6 +6,7 @@ using MarsRover.Application.Models;
 using MarsRover.Application.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MarsRover.Application.Extensions;
+using System.Linq;
 
 namespace MarsRover.Application.Test
 {
@@ -41,7 +42,7 @@ namespace MarsRover.Application.Test
         [DataRow("LMLMLMLMMR", 1, 3, CardinalDirection.East)]
         public void ExecuteRoverCommands_RoverOneInput_ShouldReturnCorrectPosition(string roverOneCommand, int endingX, int endingY, CardinalDirection endingDirection)
         {
-            _roverOne.Command = roverOneCommand.ToStringArray();
+            _roverOne.Command = roverOneCommand.Select(x => x.ToString().ToLower()).ToArray();
             _roverOne = _roverService.ExecuteRoverCommands(_roverOne, 6, 6);
             _roverOne.XCoordinate.ShouldBe(endingX);
             _roverOne.YCoordinate.ShouldBe(endingY);
@@ -55,7 +56,7 @@ namespace MarsRover.Application.Test
         [DataRow("MMRMMRMRRMR", 5, 1, CardinalDirection.South)]
         public void ExecuteRoverCommands_RoverTwoInput_ShouldReturnCorrectPosition(string roverOneCommand, int endingX, int endingY, CardinalDirection endingDirection)
         {
-            _roverTwo.Command = roverOneCommand.ToStringArray();
+            _roverTwo.Command = roverOneCommand.Select(x => x.ToString().ToLower()).ToArray();
             _roverTwo = _roverService.ExecuteRoverCommands(_roverTwo, 6, 6);
             _roverTwo.XCoordinate.ShouldBe(endingX);
             _roverTwo.YCoordinate.ShouldBe(endingY);
@@ -67,7 +68,7 @@ namespace MarsRover.Application.Test
         [DataRow("MMRMMRMRRMMMMM")]
         public void ExecuteRoverCommands_InvalidMovement_ShouldThrowError(string roverOneCommand)
         {
-            _roverTwo.Command = roverOneCommand.ToStringArray();
+            _roverTwo.Command = roverOneCommand.Select(x => x.ToString().ToLower()).ToArray();
             Should.Throw<Exception>(() => _roverService.ExecuteRoverCommands(_roverTwo, 3, 3));
             
         }

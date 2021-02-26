@@ -6,9 +6,8 @@ namespace MarsRover.Application.Extensions
     {
         public static string[] ToStringArray(this string input)
         {
-            return input.Replace(" ", "")
-                        .ToLower()
-                        .Select(x => x.ToString())
+            return input.ToLower()
+                        .Split()
                         .ToArray();
         }
     }
